@@ -137,7 +137,11 @@ class Achat
      */
     public function getPointProd1():?int
     {
-        return $this->produit1 * 5;
+        if($this->produit1 <= 0){
+            return 0;
+        }else{
+            return $this->produit1 * 5;
+        }  
     }
 
     /**
@@ -149,10 +153,15 @@ class Achat
     {
         //Verifier si au moins un produit 1 est vendu afin de dettminer 
         //le nombre de point du produit 2
-        if($this->produit1 === 0){
+
+        if($this->produit1 <= 0){
             return 0;
         }else if($this->produit1 >= 1){
-            return $this->produit2 * 5;
+            if($this->produit2 <= 0){
+                return 0;
+            }else{
+                return $this->produit2 * 5;
+            }
         }
     }
 
@@ -165,9 +174,14 @@ class Achat
      {
          //Recuperation de la partie entière de la division du nombre
          //de produit3 par 2
-         $paire = (int)($this->produit3 / 2);
-         //Retourner le nombre de point
-         return $paire * 15;
+
+         if($this->produit3 <= 0){
+             return 0;
+         }else{
+            $paire = (int)($this->produit3 / 2);
+            //Retourner le nombre de point
+            return $paire * 15;
+         }   
      }
 
      
@@ -178,7 +192,11 @@ class Achat
       */
      public function getPointProd4():?int
      {
-        return $this->produit4 * 35;
+        if($this->produit4 <= 0){
+            return 0;
+        }else{
+            return $this->produit4 * 35;
+        }   
      }
 
 
