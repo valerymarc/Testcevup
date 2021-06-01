@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Création Achat{% endblock %}
+
+{% block body %}
+  <div class="container mt-4">
+
+ 
+    
+     <h1>Ajouter une nouvelle commande</h1>
+     
+     
+
+ {% include 'achat/_form.html.twig' %}
+<br>
+<a href="{{path('achat')}}" class="btn btn-info">Retour à la liste</a>
+     
+  </div>
+
+{% endblock %}

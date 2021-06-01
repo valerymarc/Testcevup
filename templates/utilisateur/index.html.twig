@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des clients{% endblock %}
+
+
+
+
+{% block body %}
+<div class="container mt-4">
+    
+     <h1>Liste des clients</h1>
+     
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+        {{ message }}
+        </div>
+        {% endfor %}
+
+     <a href="{{path('user_create')}}" class="btn btn-success">Ajouter un nouvel utilisateur</a>
+    
+    <br>
+
+      <a class="btn btn-link" href="{{path('achat')}}">Liste des commandes</a>
+      <br>
+
+      <a class="btn btn-link" href="{{path('home')}}">Accueil</a>
+      <br><br>
+
+    <table class="table table-striped ">
+       <thead>
+       <th>ID</th>
+       <th>Numéro</th>
+       <th>Total Periode 1</th>
+       <th>Total Periode 2</th>
+       <th>Total Periode 3</th>
+       <th colspan="2">Actions</th>
+       </thead>
+       <tbody>
+       {% for util in utilisateurs %}
+           <tr>
+              <td>{{util.id}}</td>
+              <td> <a href="{{path('home')}}./?q={{util.id}}">{{util.numero}}</a></td>
+              <td> {{util.getTotalPeriode1()}} </td>
+              <td> {{util.getTotalPeriode2()}} </td>
+              <td> {{util.getTotalPeriode3()}} </td>
+              <td> <a href="{{ path('user_edit', {'id': util.id}) }}" class="btn btn-warning btn-rounded sm">Editer</a> </td>
+              <td><form method="post" action="{{ path('user_delete', {'id': util.id}) }}" onsubmit="return confirm('Etes vous sûr de vouloir supprimer cet utilisateur?');">
+               <input type="hidden" name="_method" value="DELETE">
+               <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ util.id) }}">
+               <button class="btn btn-danger sm">Delete</button>
+              </form>
+              </td>
+             
+           </tr>
+       {% endfor %}
+       </tbody>
+    </table>
+   
+</div>
+
+
+
+
+
+{% endblock %}

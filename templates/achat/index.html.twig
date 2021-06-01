@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Achat utilisateur{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1>Liste des achats </h1>
+
+{% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+        {{ message }}
+        </div>
+        {% endfor %}
+
+
+ <a href="{{path('achat_create')}}" class="btn btn-success">Nouvelle commande</a>
+ <br>
+
+ <a class="btn btn-link" href="{{path('user')}}">Gestion des utilisateurs</a>
+    <br>
+
+    <a class="btn btn-link" href="{{path('home')}}">Accueil</a>
+      <br><br>
+
+    <table class="table table-striped ">
+       <thead>
+       <tr>
+       <th>Utilisateur</th>
+       <th>Produit1</th>
+       <th>Produit2</th>
+       <th>Produit3</th>
+       <th>Produit4</th>
+       <th>Date Achat</th>
+       <th>Total Point</th>
+       <th colspan="2">Actions</th>
+       <tr>
+       </thead>
+       <tbody>
+       {% for achat in achats %}
+           <tr>
+           <td> <a href="{{path('home')}}./?q={{achat.utilisateur}}"> {{ achat.utilisateur.numero }} </a></td>
+           <td>{{ achat.produit1 }}</td>
+           <td>{{ achat.produit2 }}</td>
+           <td>{{ achat.produit3 }}</td>
+           <td>{{ achat.produit4 }}</td>
+           <td>{{ achat.createdAt|date('d/m/y') }}</td>
+           <td>{{ achat.getTotalPoint() }}</td>
+           <td><a href="{{ path('achat_edit', {'id': achat.id}) }}" class="btn btn-warning btn-rounded">Editer</a></td>
+            <td><form method="post" action="{{ path('achat_delete', {'id': achat.id}) }}" onsubmit="return confirm('Etes vous sur de vouloir supprimer cet achat?');">
+               <input type="hidden" name="_method" value="DELETE">
+               <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ achat.id) }}">
+               <button class="btn btn-danger">Delete</button>
+              </form>
+              </td>
+           </tr>
+       {% endfor %}
+       </tbody>
+    </table>
+
+  
+</div>
+{% endblock %}

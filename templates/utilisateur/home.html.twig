@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Infos clients{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-2" style="background-color:orange">
+        {% include 'utilisateur/_filter.html.twig' with {form: form} only %}
+      <a href="{{path('user')}}" class="btn btn-link">Liste utilisateurs</a>
+      <a href="{{path('achat')}}" class="btn btn-link">Liste commandes</a>
+    </div>
+    <div class="col-md-10">
+    {% for user in users %}
+    <h1>Informations sur le client <p id="usr"> {{user.numero}} </p></h1>
+    {% endfor %}
+    <br><br>
+
+    <table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+     <th>PERIODE</th>
+     <th>POINTS</th>
+     <th>EUROS</th>
+    </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}   
+        <tr>
+         <th>PERIODE 1</th>
+         <td id="usr">{{ user.getTotalPeriode1() }}</td>
+         <td id="usr">{{ user.getTotalPeriode1() * 0.001 }}</td>
+        </tr>
+        <tr>
+         <th>PERIODE 2</th>
+         <td id="usr">{{ user.getTotalPeriode2() }}</td>
+         <td id="usr">{{ user.getTotalPeriode2() * 0.001 }}</td>
+        </tr>
+
+        <tr>
+         <th>PERIODE 3</th>
+         <td id="usr">{{ user.getTotalPeriode3() }}</td>
+         <td id="usr">{{ user.getTotalPeriode3() * 0.001 }}</td>
+        </tr>
+   {% endfor %}
+    </tbody>
+    </table>
+    </div>
+
+
+  </div>
+
+<br><br>
+  <h4>Bienvenue sur la page de calcul des points des clients en fonction de leur période d'achat 
+    Sélectionner un utilisateur dans le champs ci dessus et cliquer sur le bouton Filtrer pour afficher les informations concernant cet utilisateur
+  </h4>
+
+
+</div>
+
+{% endblock %}
