@@ -2,9 +2,8 @@
 
 namespace App\Entity;
 
-use App\Repository\AchatRepository;
-use DateTime;
-use DateTimeImmutable;
+
+
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -130,6 +129,9 @@ class Achat
 
 
     //Calcul du nombre de point par produit
+    //Pas de nombre negatif dans les produits
+
+
     /**
      * Nombre de point produit 1
      *
@@ -137,11 +139,7 @@ class Achat
      */
     public function getPointProd1():?int
     {
-        if($this->produit1 <= 0){
-            return 0;
-        }else{
-            return $this->produit1 * 5;
-        }  
+        return $this->produit1 <= 0 ? 0 : $this->produit1 * 5;
     }
 
     /**
@@ -154,15 +152,7 @@ class Achat
         //Verifier si au moins un produit 1 est vendu afin de dettminer 
         //le nombre de point du produit 2
 
-        if($this->produit1 <= 0){
-            return 0;
-        }else if($this->produit1 >= 1){
-            if($this->produit2 <= 0){
-                return 0;
-            }else{
-                return $this->produit2 * 5;
-            }
-        }
+        return $this->produit1<=0 ? 0 : ($this->produit2<=0 ? 0 : $this->produit2 * 5);
     }
 
      /**
@@ -174,14 +164,8 @@ class Achat
      {
          //Recuperation de la partie entière de la division du nombre
          //de produit3 par 2
-
-         if($this->produit3 <= 0){
-             return 0;
-         }else{
-            $paire = (int)($this->produit3 / 2);
-            //Retourner le nombre de point
-            return $paire * 15;
-         }   
+         $paire = (int)($this->produit3 / 2);
+         return $this->produit3 <= 0 ? 0 : $paire * 15;
      }
 
      
@@ -191,25 +175,19 @@ class Achat
       * @return int|null
       */
      public function getPointProd4():?int
-     {
-        if($this->produit4 <= 0){
-            return 0;
-        }else{
-            return $this->produit4 * 35;
-        }   
+     {        
+        return $this->produit4 <= 0 ? 0 : $this->produit4 * 35;
      }
 
 
      //Calcul du nombre total des point de cet achat
      public function getTotalPoint():?int
      {
-         $result = $this->getPointProd1()+$this->getPointProd2()+$this->getPointProd3()+$this->getPointProd4();
-         return $result;
+         return $this->getPointProd1()+$this->getPointProd2()+$this->getPointProd3()+$this->getPointProd4();
      }
 
 
-     //Verification de la periode d'achat en fonction de la date renseigné
-     
+     //Verification de la periode d'achat en fonction de la date d'achat renseigné
      public function getPeriod():?int
      {
         //Conversion de la date en string pour effectuer la comparaison 
